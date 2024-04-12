@@ -2,7 +2,7 @@
     include "Empresa.php";
     include "Cliente.php";
     include "Moto.php";
-    include "Venta.php";
+    include "Venta.php"; 
  
     $objtCliente1= new Cliente("juan", "gonzalez", true, "dni", 123 );
     $objtCliente2= new Cliente( "yamel", "burgos", false, "dni", 321 );

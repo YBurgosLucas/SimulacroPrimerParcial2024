@@ -14,7 +14,7 @@ donde $_compra: es el costo de la moto.
 anio: cantidad de años transcurridos desde que se fabricó la moto.
 por_inc_anual: porcentaje de incremento anual de la moto.
  */
-    class Moto{
+    class Moto{ 
         private $codigo;
         private $costo;
         private $anioFabricaion;
