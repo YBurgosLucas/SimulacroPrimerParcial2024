@@ -92,17 +92,22 @@ número de documento de un Cliente y retorna una colección con las ventas reali
         return $encontrado;
     }
     public function registrarVenta($colCodigosMoto, $objCliente){
-        $nuevaVenta= new Venta();
+        $nuevaColeccV=[];
+        $nuevaColeccClientes=[];
         $importeFinal=0;
         foreach ($colCodigosMoto as $codigoMoto) {
             $objtMoto=$this->retornarMoto($codigoMoto);
-            if ( ($objtMoto && $objtMoto->estadoMoto()) && ($objCliente== false && $objCliente->darDeBaja()==false)){
+            if ( ($objtMoto!=0 && $objtMoto->estadoMoto()) && ($objCliente== false && $objCliente->darDeBaja()==false)){
                $nuevaVenta->incorporarMoto($objtMoto);
                $importeFinal+=$objtMoto->getCosto();
+               $j=count($this->getColecVentasRealizadas());
+               $nuevaColecc[$j]=$nuevaVenta;
+               $i=count($this->getcoleccionClientes());
+               $nuevaColeccClientes[$i]=$objCliente;
             }
         }
-        $this->setColecVentasRealizadas($nuevaVenta);
-        $this->setColeccionClientes($objCliente);
+        $this->setColecVentasRealizadas($nuevaColecc);
+        $this->setColeccionClientes($nuevaColeccClientes);
         return $importeFinal;
     }
 
