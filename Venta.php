@@ -71,7 +71,7 @@ Utilizar el método que calcula el precio de venta de la moto donde crea necesar
                 "\nfecha: ".$this->getFecha().
                 "\nReferencia al Cliente: ".$this->getReferenciaCliente().
                 "\nColeccion de motos:\n ".$this->getColeccionMotos().
-                "\nPrecioFinal: ".$this->getPrecioFinal();
+                "\nPrecioFinal: ".$this->getPrecioFinal()."\n";
         return $cadena;
     }
 

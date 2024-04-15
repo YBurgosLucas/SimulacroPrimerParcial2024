@@ -84,19 +84,18 @@ por_inc_anual: porcentaje de incremento anual de la moto.
         $cad="Codigo: ".$this->getCodigo().
              "\nCosto: ".$this->getCosto().
              "\nAnios: ".$this->getAnioFabricacion().
-             "\nDescripcion:\n ".$this->getDescripcion().
-             "\n Porcentaje Incremento Anual: ".$this->getPorIncAnual().
-             "\nEstado (si/no)Disponible :".$this->getActiva();
+             "\nDescripcion:\n".$this->getDescripcion().
+             "\nPorcentaje Incremento Anual:".$this->getPorIncAnual().
+             "%\nEstado Disponible :".$this->getActiva()."\n";
         return $cad;
     }
     public function estadoMoto(){
-        if($this->getActiva()){
+        if($this->getActiva() == "true"){
             $estado=true;
         }
         else{ 
             $estado=false;
         }
-        $this->setActiva($estado);
         return $estado;
     }
 

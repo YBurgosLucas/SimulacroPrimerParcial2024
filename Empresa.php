@@ -22,15 +22,15 @@ número de documento de un Cliente y retorna una colección con las ventas reali
         private $denominacion;
         private $direccion;
         private $coleccionClientes;
-        private $coleccionMotoso;
+        private $coleccionMotos;
         private $colecVentasRealizadas;
 
         public function __construct($categoria, $addres, $colecClientes, $colecMotos, $colecVRealizadas){
             $this->denominacion= $categoria;
             $this->direccion= $addres;
-            $this->coleccionClientes=[$colecClientes];
-            $this->coleccionMotos=[$colecMotos];
-            $this->colecVentasRealizadas= [$colecVRealizadas];
+            $this->coleccionClientes=$colecClientes;
+            $this->coleccionMotos=$colecMotos;
+            $this->colecVentasRealizadas= $colecVRealizadas;
         }
     //metodos de acceso de get
     public function getDenominacion() {
@@ -62,63 +62,47 @@ número de documento de un Cliente y retorna una colección con las ventas reali
     }
 
     public function setColeccionClientes($colecClientes) {
-        $this->coleccionClientes = [$colecClientes];
+        $this->coleccionClientes = $colecClientes;
     }
 
     public function setColeccionMotos($colecMotos) {
-         $this->coleccionMotos = [$colecMotos];
+         $this->coleccionMotos = $colecMotos;
     }
 
     public function setColecVentasRealizadas($colecVRealizadas) {
-         $this->colecVentasRealizadas = [$colecVRealizadas];
+         $this->colecVentasRealizadas = $colecVRealizadas;
+    }
+
+    public function colecClientes(){
+        $cadena="";
+        foreach($this->getColeccionClientes() as $objClientes){
+            $cadena.=$objClientes."\n";
+        }
+        return $cadena;
+    }
+    public function colecMotos(){
+        $cadena1="";
+        foreach($this->getColeccionMotos() as $objMotos){
+            $cadena1.=$objMotos."\n";
+        }
+        return $cadena1;
+    }
+    public function colecVentasRealizada(){
+        $cadena2="";
+        foreach($this->getColecVentasRealizadas() as $objVentaR){
+            $cadena2.=$objVentaR."\n";
+        }
+        return $cadena2;
     }
 
     public function __toString(){
-        $cadena="Denominacion: ".$this->getDenominacion().
+        $cad="Denominacion: ".$this->getDenominacion().
                 "\nDireccion: ".$this->getDireccion().
-                "\nColeccion Clientes:\n ".$this->getColeccionClientes().
-                "\nColeccion de Motos:\n ".$this->getColeccionMotos().
-                "\nColeccion Ventas Hechas:\n ".$this->getColecVentasRealizadas();
-        return $cadena;
+                "\nColeccion Clientes:\n".$this->colecClientes().
+                "\nColeccion de Motos:\n".$this->colecMotos().
+                "\nColeccion Ventas Hechas:\n".$this->colecVentasRealizada();
+        return $cad;
     }
+    
 
-    public function retornarMoto($codigoMoto){ 
-        $encontrado=0;
-        foreach($this->getColeccionMotos() as $objtMoto){
-            if($objtMoto->getCodigo()== $codigoMoto){
-                $encontrado=$objtMoto;
-            }
-        }
-        return $encontrado;
-    }
-    public function registrarVenta($colCodigosMoto, $objCliente){
-        $nuevaColeccV=[];
-        $nuevaColeccClientes=[];
-        $importeFinal=0;
-        foreach ($colCodigosMoto as $codigoMoto) {
-            $objtMoto=$this->retornarMoto($codigoMoto);
-            if ( ($objtMoto!=0 && $objtMoto->estadoMoto()) && ($objCliente== false && $objCliente->darDeBaja()==false)){
-               $nuevaVenta->incorporarMoto($objtMoto);
-               $importeFinal+=$objtMoto->getCosto();
-               $j=count($this->getColecVentasRealizadas());
-               $nuevaColecc[$j]=$nuevaVenta;
-               $i=count($this->getcoleccionClientes());
-               $nuevaColeccClientes[$i]=$objCliente;
-            }
-        }
-        $this->setColecVentasRealizadas($nuevaColecc);
-        $this->setColeccionClientes($nuevaColeccClientes);
-        return $importeFinal;
-    }
-
-    public function retornarVentaXCliente($tipo, $nroDocumento){
-        $colecVentasAlCliente=[];
-        if($tipo == $objCliente->getTipo() && $nroDocumento == $objCliente->getNroDocumento()){
-            $colecVentasAlCliente=[$objCliente];
-        }
-        else{
-            $colecVentasAlCliente=[0];
-        }
-        return $colecVentasAlCliente;
-    }
-    }
+}

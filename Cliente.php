@@ -36,7 +36,7 @@ documento. Si un cliente está dado de baja, no puede registrar compras desde el
     }
 
     public function getNumeroDocumento() {
-        return $this->numeroDocumento;
+        return $this->nroDocumento;
     }
 //metodos de acceso set
     public function setNombre($nomb) {
