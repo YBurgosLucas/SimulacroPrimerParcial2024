@@ -96,13 +96,67 @@ número de documento de un Cliente y retorna una colección con las ventas reali
     }
 
     public function __toString(){
-        $cad="Denominacion: ".$this->getDenominacion().
+        $cad="DATOS DE LA EMPRESA:\nDenominacion: ".$this->getDenominacion().
                 "\nDireccion: ".$this->getDireccion().
-                "\nColeccion Clientes:\n".$this->colecClientes().
-                "\nColeccion de Motos:\n".$this->colecMotos().
-                "\nColeccion Ventas Hechas:\n".$this->colecVentasRealizada();
+                "\nColeccion Clientes:".$this->colecClientes().
+                "\nColeccion de Motos:".$this->colecMotos().
+                "\nColeccion Ventas Hechas:".$this->colecVentasRealizada();
         return $cad;
     }
-    
+     
+    public function retornarMoto($codigoMoto){
+        $encontrado=0;
+        foreach($this->getColeccionMotos() as $objMoto){
+            if($objMoto->getCodigo() == $codigoMoto){
+                $encontrado=$objMoto;
+            }
+        }
+        return $encontrado;
+    }
 
-}
+    public function registrarVenta($colCodigosMoto, $objCliente){
+        $j=count($this->getColecVentasRealizadas());
+        $numero=0;
+        $fecha=date("Y-m-d");
+        $importeFinal=0;
+        $nuevaVenta=new Venta($numero++, $fecha,  $objCliente ,$this->getColeccionMotos() , $importeFinal);
+        $ColecVentaEmpresa=[];
+    if(is_array($colCodigosMoto) || is_object($colCodigosMoto)){
+        foreach ($colCodigosMoto as $codigoMoto){
+            $objMoto=$this->retornarMoto($codigoMoto);
+            if( ($objMoto->estadoMoto() == 0 ) && ($objCliente->darDeBaja()== false)){
+                $nuevaVenta->incorporarMoto($objMoto);
+                $importeFinal+=$objMoto->darPrecioVenta(); 
+            }
+        }
+     }
+     if($nuevaVenta->getPrecioFinal($importeFinal) > 0){
+        $ColecVentaEmpresa[$j]=$nuevaVenta;
+        $this->setColecVentasRealizadas($ColecVentaEmpresa);
+        $nuevaVenta->setNumero($numero++);
+        $nuevaVenta->setPrecioFinal($importeFinal);
+        
+     }
+        return $importeFinal;
+    }
+     
+    public function retornarVentasXCliente($tipo,$numDoc){
+        $ventasCliente=[];
+
+        foreach ($this->getColecVentasRealizadas() as $venta){
+            $clienteVenta=$venta->getReferenciaCliente();
+                if(($clienteVenta->getNumeroDocumento() == $numDoc) && ($clienteVenta->getTipoDocumento() == $tipo)){
+                     $ventasCliente[]=$venta;
+                
+                  }
+                else{
+                    $ventasCliente[]=0;
+                }
+            
+        }
+        
+        return $ventasCliente;
+    }
+
+
+    }

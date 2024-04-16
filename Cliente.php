@@ -59,24 +59,22 @@ documento. Si un cliente está dado de baja, no puede registrar compras desde el
         $this->numeroDocumento = $dni;
     }
     
+    public function __toString(){
+        $cadena="\nNombre y apellido: ".$this->getNombre()." ".$this->getApellido().
+                "\nEstado: ".$this->getEstaDadoDeBaja().
+                " esta dado de baja\nTipo Documento: ".$this->getTipoDocumento().
+                "\nNro.Documento: ".$this->getNumeroDocumento();
+        return $cadena;
+    }
     public function darDeBaja(){
         
-        if($this->getEstaDadoDeBaja()){
+        if($this->getEstaDadoDeBaja() == "si"){
             $estado=true;    
         }
         else{
             $estado=false;
         }
-        $this->setEstaDadoDeBaja($estado);
+       
         return $estado;
-    }
-
-
-    public function __toString(){
-        $cadena="Nombre y apellido (cliente): ".$this->getNombre()." ".$this->getApellido().
-                "\nEstado: ".$this->getEstaDadoDeBaja().
-                "\nTipo Documento: ".$this->getTipoDocumento().
-                "\nNro.Documento: ".$this->getNumeroDocumento();
-        return $cadena;
     }
 }

@@ -81,28 +81,28 @@ por_inc_anual: porcentaje de incremento anual de la moto.
     }
 
     public function __toString(){
-        $cad="Codigo: ".$this->getCodigo().
+        $cad="\nCodigo: ".$this->getCodigo().
              "\nCosto: ".$this->getCosto().
              "\nAnios: ".$this->getAnioFabricacion().
              "\nDescripcion:\n".$this->getDescripcion().
-             "\nPorcentaje Incremento Anual:".$this->getPorIncAnual().
-             "%\nEstado Disponible :".$this->getActiva()."\n";
+             "\nPorcentaje Incremento Anual: ".$this->getPorIncAnual().
+             "%\nEstado Disponible:".$this->getActiva();
         return $cad;
     }
+
     public function estadoMoto(){
-        if($this->getActiva() == "true"){
-            $estado=true;
-        }
-        else{ 
-            $estado=false;
+        $estado=-1;
+        if($this->getActiva() == true){
+            $estado=0;
         }
         return $estado;
     }
 
     public function darPrecioVenta(){
-        $anio=2024- $this->getAnioFabricacion();
-        $_compra=$this->getCosto();
-        if($this->estadoMoto()){
+        $anio= 2024 - ($this->getAnioFabricacion());
+        $_compra=0;
+        if($this->estadoMoto() == 0){
+            $_compra=$this->getCosto();
             $_venta = $_compra + $_compra * ($anio * $this->getPorIncAnual());
         }
         else{
@@ -110,5 +110,7 @@ por_inc_anual: porcentaje de incremento anual de la moto.
         }
      return $_venta;
     }
+
+
 
     }

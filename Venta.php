@@ -21,7 +21,7 @@ Utilizar el método que calcula el precio de venta de la moto donde crea necesar
             $this->numero= $num;
             $this->fecha= $data;
             $this->referenciaCliente=$refCliente;
-            $this->coleccionMotos= [$colecMotos];
+            $this->coleccionMotos= $colecMotos;
             $this->precioFinal=$costoFinal;
     
         }
@@ -59,43 +59,44 @@ Utilizar el método que calcula el precio de venta de la moto donde crea necesar
     }
 
     public function setColeccionMotos($colecMotos) {
-        $this->coleccionMotos = [$colecMotos];
+        $this->coleccionMotos = $colecMotos;
     }
 
     public function setPrecioFinal($costoFinal) {
         $this->precioFinal = $costoFinal;
     }
- 
+    public function colecMotos(){
+        $cadena1="";
+        foreach($this->getColeccionMotos() as $objMotos){
+            $cadena1.=$objMotos."\n";
+        }
+        return $cadena1;
+    }
     public function __toString(){
-        $cadena="numero: ".$this->getNumero().
+        $cadena="\nnumero: ".$this->getNumero().
                 "\nfecha: ".$this->getFecha().
                 "\nReferencia al Cliente: ".$this->getReferenciaCliente().
-                "\nColeccion de motos:\n ".$this->getColeccionMotos().
-                "\nPrecioFinal: ".$this->getPrecioFinal()."\n";
+                "\nColeccion de motos:".$this->colecMotos().
+                "ImporteFinal:$".$this->getPrecioFinal();
+
         return $cadena;
     }
 
     public function incorporarMoto($objMoto){
-        if ($this->estadoMoto($objMoto)){
-            $this->getColeccionMotos()[]=$objMoto;
+        $nuevacolecMoto=[];
+        if ($objMoto->estadoMoto()!= -1){
+            $nuevacolecMoto[]=$objMoto;
             $valor=$objMoto->darPrecioVenta();
             $resultado=true;
         }
         else{
             $resultado=false;
         }
+        $this->setColeccionMotos($nuevacolecMoto);
         $this->setPrecioFinal($valor);
-        return $resultado;
-
     }
-     public function sePuedeVender(){
-        if($this->incorporarMoto($objMoto)){
-            $respuesta=true;
-        }
-        else{
-            $respuesta=false;
-        }
-        return $respuesta;  
-     }
+
+    
+
 
     }
